@@ -3,6 +3,7 @@ import {View, Text, TouchableOpacity} from 'react-native';
 
 import RNCalendarEvents from 'react-native-calendar-events';
 
+const Identificationn = 'this is a note for find me';
 export default class App extends Component {
     /**
      * 是否已经授权
@@ -19,6 +20,55 @@ export default class App extends Component {
         await RNCalendarEvents.authorizeEventStore();
     }
 
+    async saveEvent() {
+        const month = 8;
+        const year = 2017;
+        const data = await fetch(`http://localhost:3000/getData?name=${encodeURIComponent(`刘腊梅${year}${month}`)}`);
+        const json = await data.json();
+        if (json.error) {
+            alert('后端出问题了');
+            return;
+        }
+
+        // 检查是否导入数据当月是否已有数据，如果有就删除
+        const events = await this.readEvent(new Date(`${year}-${month}-${json.data[0].date} 00:00:00`), new Date(`${year}-${month}-${json.data[json.data.length - 1].date} 00:00:00`));
+        events.map(v=>{
+            if(v.notes === Identificationn) {
+                this.removeEvent(v.id);
+            }
+        });
+
+        //todo
+        return 
+        json
+            .data
+            .map(v => {
+                const date = `${year}-${month}-${v.date}`;
+                RNCalendarEvents.saveEvent(v.work, {
+                    // location: 'location',
+                    notes: Identificationn,
+                    startDate: new Date(date + ' 00:00:00'),
+                        endDate: new Date(date + ' 23:59:59')
+                    })
+                    .then(id => {
+                    // alert(id);
+                })
+                    .catch(error => {
+                        // alert(error);
+                    });
+            });
+
+    }
+
+    async readEvent(start, end) {
+        const eventArr = await RNCalendarEvents.fetchAllEvents(start, end);
+        return eventArr;
+    }
+
+    async removeEvent(id) {
+        RNCalendarEvents.removeFutureEvents(id);
+    }
+
     onPress = async() => {
         const authorization = await this.isAuthorization();
         let authorizationResult = true;
@@ -29,18 +79,7 @@ export default class App extends Component {
                 authorizationResult = false;
             }
         }
-
-        RNCalendarEvents.saveEvent('title', {
-            location: 'location',
-            notes: 'notes',
-            startDate: new Date(),
-            endDate: new Date()
-        }).then(id => {
-            alert(id);
-        }).catch(error => {
-            alert(error);
-        });
-
+        this.saveEvent();
     }
 
     render() {
