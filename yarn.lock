@@ -3002,6 +3002,10 @@ react-devtools-core@^2.0.8:
     shell-quote "^1.6.1"
     ws "^2.0.3"
 
+react-native-calendar-events@^1.4.2:
+  version "1.4.2"
+  resolved "http://registry.npm.taobao.org/react-native-calendar-events/download/react-native-calendar-events-1.4.2.tgz#7fdf5e361b24d5c7411597fe975c89ef93f72108"
+
 react-native@0.44.3:
   version "0.44.3"
   resolved "http://registry.npm.taobao.org/react-native/download/react-native-0.44.3.tgz#04550e1cdfc619a712f3f5969d68cd7c2dc4c073"

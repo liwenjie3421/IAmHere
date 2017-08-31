@@ -11,19 +11,19 @@ export default class Root extends Component {
         }
     }
     componentWillMount() {
-        (async() => {
-            const res = await fetch(`http://localhost:3000/getData?name=${encodeURIComponent('李文杰')}`);
-            const json = await res.json();
-            this.setState({data: json.data})
-            console.log(json.data);
-        })();
+        // (async() => {
+        //     const res = await fetch(`http://localhost:3000/getData?name=${encodeURIComponent('刘腊梅')}`);
+        //     const json = await res.json();
+        //     this.setState({data: json.data})
+        //     console.log(json.data);
+        // })();
     }
 
     render() {
 
         return (
             <App>
-                {this
+                {/* {this
                     .state
                     .data
                     .map(v => {
@@ -34,7 +34,7 @@ export default class Root extends Component {
                                 <Text>{v.date}</Text>
                             </View>
                         );
-                    })}
+                    })} */}
             </App>
         )
     }
