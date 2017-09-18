@@ -10,32 +10,11 @@ export default class Root extends Component {
             data: []
         }
     }
-    componentWillMount() {
-        // (async() => {
-        //     const res = await fetch(`http://localhost:3000/getData?name=${encodeURIComponent('刘腊梅')}`);
-        //     const json = await res.json();
-        //     this.setState({data: json.data})
-        //     console.log(json.data);
-        // })();
-    }
 
     render() {
 
         return (
-            <App>
-                {/* {this
-                    .state
-                    .data
-                    .map(v => {
-                        return (
-                            <View>
-                                <Text>{v.work}</Text>
-                                <Text>{v.day}</Text>
-                                <Text>{v.date}</Text>
-                            </View>
-                        );
-                    })} */}
-            </App>
+            <App />
         )
     }
 };
