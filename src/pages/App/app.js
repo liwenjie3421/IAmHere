@@ -29,17 +29,15 @@ export default class App extends Component {
             alert('后端出问题了');
             return;
         }
-
         // 检查是否导入数据当月是否已有数据，如果有就删除
-        const events = await this.readEvent(new Date(`${year}-${month}-${json.data[0].date} 00:00:00`), new Date(`${year}-${month}-${json.data[json.data.length - 1].date} 00:00:00`));
+        const events = await this.readEvent(new Date(`${year}-${month}-${json.data[0].date} 00:00:00`), new Date(`${year}-${month}-${json.data[json.data.length - 1].date} 23:59:59`));
         events.map(v=>{
             if(v.notes === Identificationn) {
                 this.removeEvent(v.id);
             }
         });
 
-        //todo
-        return 
+        // 新增事件
         json
             .data
             .map(v => {
@@ -47,8 +45,8 @@ export default class App extends Component {
                 RNCalendarEvents.saveEvent(v.work, {
                     // location: 'location',
                     notes: Identificationn,
-                    startDate: new Date(date + ' 00:00:00'),
-                        endDate: new Date(date + ' 23:59:59')
+                    startDate: new Date(date + ' 01:00:00'),
+                    endDate: new Date(date + ' 23:00:00')
                     })
                     .then(id => {
                     // alert(id);
@@ -71,13 +69,10 @@ export default class App extends Component {
 
     onPress = async() => {
         const authorization = await this.isAuthorization();
-        let authorizationResult = true;
         if (!authorization) {
             try {
                 await this.getAuthorization()
-            } catch (error) {
-                authorizationResult = false;
-            }
+            } catch (error) {}
         }
         this.saveEvent();
     }
