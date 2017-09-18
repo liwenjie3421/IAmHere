@@ -1,10 +1,18 @@
 import React, {Component, PropTypes} from 'react';
-import {View, Text, TouchableOpacity} from 'react-native';
+import {View, Text, TouchableOpacity, TextInput} from 'react-native';
 
 import RNCalendarEvents from 'react-native-calendar-events';
 
 const Identificationn = 'this is a note for find me';
 export default class App extends Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+
+        };
+    }
+
     /**
      * 是否已经授权
      *
@@ -31,8 +39,8 @@ export default class App extends Component {
         }
         // 检查是否导入数据当月是否已有数据，如果有就删除
         const events = await this.readEvent(new Date(`${year}-${month}-${json.data[0].date} 00:00:00`), new Date(`${year}-${month}-${json.data[json.data.length - 1].date} 23:59:59`));
-        events.map(v=>{
-            if(v.notes === Identificationn) {
+        events.map(v => {
+            if (v.notes === Identificationn) {
                 this.removeEvent(v.id);
             }
         });
@@ -46,7 +54,7 @@ export default class App extends Component {
                     // location: 'location',
                     notes: Identificationn,
                     startDate: new Date(date + ' 01:00:00'),
-                    endDate: new Date(date + ' 23:00:00')
+                        endDate: new Date(date + ' 23:00:00')
                     })
                     .then(id => {
                     // alert(id);
@@ -85,9 +93,16 @@ export default class App extends Component {
                 flex: 1,
                 marginTop: 50
             }}>
-                <TouchableOpacity onPress={this.onPress}>
-                    <Text>234</Text>
-                </TouchableOpacity>
+                <Text>
+                    {this.state.fuck}
+                </Text>
+                <TextInput
+                    multiline={false}
+                    style={{
+                        height: 40,
+                        borderColor: 'gray',
+                        borderWidth: 1
+                    }} />
             </View>
         );
     }
