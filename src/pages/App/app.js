@@ -1,7 +1,7 @@
 import React, {Component, PropTypes} from 'react';
-import {View, Text, TouchableOpacity, TextInput} from 'react-native';
-
+import {View, Text, TouchableOpacity, TextInput, DatePickerIOS} from 'react-native';
 import RNCalendarEvents from 'react-native-calendar-events';
+import DataConfig from '../../components/dataConfig';
 
 const Identificationn = 'this is a note for find me';
 export default class App extends Component {
@@ -9,7 +9,8 @@ export default class App extends Component {
     constructor(props) {
         super(props);
         this.state = {
-
+            dateStart: new Date(),
+            dateEnd: new Date()
         };
     }
 
@@ -85,24 +86,26 @@ export default class App extends Component {
         this.saveEvent();
     }
 
+    onDateChange = (date) => {
+        this.setState({date});
+    }
+
+    componentWillMount() {}
+
     render() {
-        const {tipObj, hideTip} = this.props;
+        const dataSource = ['开始时间', '结束时间'];
         return (
             <View
                 style={{
                 flex: 1,
                 marginTop: 50
             }}>
-                <Text>
-                    {this.state.fuck}
-                </Text>
-                <TextInput
-                    multiline={false}
-                    style={{
-                        height: 40,
-                        borderColor: 'gray',
-                        borderWidth: 1
-                    }} />
+
+                <DataConfig dataSource={dataSource}/> {/* <DatePickerIOS
+                    date={this.state.dateStart}
+                    mode="date"
+                    timeZoneOffsetInMinutes={8 * 60}
+                    onDateChange={this.onDateChange}/> */}
             </View>
         );
     }
